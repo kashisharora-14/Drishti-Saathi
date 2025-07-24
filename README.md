@@ -23,3 +23,6 @@ Every voice matters. Every child deserves a companion that listens.
 
 ## 🔐 Environment Variables
 Rename `.env.example` to `.env` and add:
+
+## 💡 Inspiration
+Blind children often feel excluded from digital tools. Drishti Saathi is built to give them a friend who can listen, talk, and share joy — through voice only. 💙
