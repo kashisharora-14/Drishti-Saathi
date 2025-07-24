@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>Bolo Sikho+ Voice Chatbot</title>
+    <link rel="icon" href="data:,">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: orange;
+            color: white;
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden;
+            overflow-y: auto;
+
+        }
+
+        header {
+            background: linear-gradient(135deg, #f8bb13, rgb(106, 185, 106), #004d40, orange);
+            color: white;
+            font-size: 1.6rem;
+            font-weight: bold;
+            text-align: center;
+            letter-spacing: 1px;
+            height: 25vh;
+        }
+
+
+
+        main {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 2rem;
+        }
+
+        #responseText {
+            background-color: #00695c;
+            color: white;
+            padding: 1.5rem;
+            border-radius: 12px;
+            max-width: 700px;
+            margin-top: 1rem;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        }
+
+        button {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            color: #ffffff;
+            border: 1px solid rgba(255, 255, 255, 0.25);
+            border-radius: 12px;
+            padding: 0.8rem 1.2rem;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            margin: 0.2rem;
+            transition: all 0.3s ease;
+        }
+
+        button:hover {
+            background: rgba(255, 255, 255, 0.25);
+            transform: scale(1.05);
+        }
+
+        select {
+            background-color: #ffffff;
+            color: #004d40;
+            border: 2px solid #f9a825;
+            border-radius: 8px;
+            padding: 0.4rem 0.8rem;
+            font-size: 1rem;
+            margin-top: 1rem;
+        }
+
+        .mic-status {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-top: 20px;
+            font-weight: 600;
+            font-size: 1rem;
+            color: #25f9dd;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 0.6rem 1rem;
+            border-radius: 12px;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        #micIndicator {
+            width: 14px;
+            height: 14px;
+            background-color: #ffffff;
+            border-radius: 50%;
+            animation: pulse 1.5s infinite;
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+                opacity: 0.6;
+            }
+
+            50% {
+                transform: scale(1.4);
+                opacity: 1;
+            }
+
+            100% {
+                transform: scale(1);
+                opacity: 0.6;
+            }
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+                opacity: 0.7;
+            }
+
+            50% {
+                transform: scale(1.2);
+                opacity: 1;
+            }
+
+            100% {
+                transform: scale(1);
+                opacity: 0.7;
+            }
+        }
+
+        #listeningStatus {
+            font-weight: bold;
+            color: white;
+            margin-top: 10px;
+        }
+
+        footer {
+            background: linear-gradient(135deg, #f8bb13, rgb(106, 185, 106), #004d40, orange);
+            color: white;
+            text-align: center;
+            padding: 1rem;
+            font-size: 0.85rem;
+            margin: 0;
+            padding: 0;
+        }
+
+        html,
+        body {
+            height: 100%;
+        }
+
+        .app-container {
+            min-height: 120vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        main {
+            flex: 1;
+        }
+
+        .display-box {
+            background-color: #00695c;
+            border-radius: 12px;
+            padding: 1rem;
+            margin: 1rem auto;
+            max-width: 700px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            color: white;
+        }
+
+        .display-box p {
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        #userSpokenText,
+        #output {
+            background-color: #004d40;
+            padding: 1.2rem;
+            border-radius: 8px;
+            font-size: 1.2rem;
+            border: 1px solid #00695c;
+            margin-bottom: 1rem;
+            width: 640px;
+        }
+
+        #controls button {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            color: #ffffff;
+            border: 1px solid rgba(255, 255, 255, 0.25);
+            border-radius: 12px;
+            padding: 0.8rem 1.2rem;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            margin: 0.5rem;
+            transition: all 0.3s ease;
+        }
+
+        #controls button:hover {
+            background: rgba(255, 255, 255, 0.25);
+            transform: scale(1.05);
+        }
+
+
+        .typewriter-container {
+            min-height: 2.5rem;
+            overflow: visible;
+            white-space: normal;
+            font-size: 1.4rem;
+            color: #ffeb3b;
+            padding-bottom: 0.5rem;
+        }
+
+
+        #typewriterText::after {
+            content: '';
+            display: inline-block;
+            width: 2px;
+            height: 2rem;
+            background-color: #ffeb3b;
+            margin-left: 2px;
+            animation: blinkCursor 0.8s steps(1) infinite;
+            vertical-align: bottom;
+        }
+
+        @keyframes blinkCursor {
+
+            0%,
+            49% {
+                opacity: 1;
+            }
+
+            50%,
+            100% {
+                opacity: 0;
+            }
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <div class="app-container">
+        <header style="
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    background: linear-gradient(135deg, #f8bb13, rgb(106, 185, 106), #004d40, orange);
+    padding: 1rem 2rem;
+    height: 19vh;
+">
+            <img src="logo.png" alt="Drishti Saathi Logo" style="
+        position: absolute;
+        left: 2rem;
+        height:auto;
+        width: 13rem;
+    " />
+
+            <div style="text-align: center;">
+                <h1 style="font-size: 2.2rem; color: #fff; margin: 0;">Drishti Saathi</h1>
+                <div class="typewriter-container">
+                    <p id="typewriterText" style="margin: 0;"></p>
+                </div>
+            </div>
+        </header>
+
+
+
+        <main
+            style="display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 1rem;">
+            <h1>How can I help you today?</h1>
+
+            <div class="language-buttons" style="margin-top: 1rem;">
+                <button onclick="setLanguage('en-US')">🇬🇧 English</button>
+                <button onclick="setLanguage('hi-IN')">🇮🇳 हिंदी</button>
+            </div>
+            <input type="hidden" id="languageSelect">
+
+            <div class="mic-status">
+                <div id="micIndicator"></div>
+                <span id="listeningStatus">Mic off</span>
+            </div>
+            <div id="controls" style="margin-top: 20px;">
+                <button id="stopBtn">🛑 Stop</button>
+                <button id="restartBtn">🔄 Restart</button>
+                <button id="pauseBtn">⏸️ Pause</button>
+                <button id="resumeBtn">▶️ Resume</button>
+            </div>
+
+
+            <div class="display-box">
+                <p><strong>You said:</strong></p>
+                <div id="userSpokenText"></div>
+            </div>
+
+            <div class="display-box">
+                <p><strong>Response:</strong></p>
+                <div id="output"></div>
+            </div>
+        </main>
+        <footer
+            style="margin-top: 2rem; text-align: center; font-size: 0.8rem; color: white; padding: 1rem 0; border-top: 1px solid #ccc;">
+            <p><em>Born on a bus ride. Built for learners the world often overlooks.<br>Drishti Saathi exists to
+                    serve—not to sell.</em></p>
+            <p>Made with ❤️ using <strong>Murf AI</strong> and <strong>Gemini</strong> for voice-first learning.</p>
+            <p>© 2025 <strong>Drishti Saathi</strong> • Murf Voice Hackathon Entry</p>
+            <p><a href="mailto:kashisharora1303@email.com?subject=Drishti%20Saathi%20Query"
+                    style="color: white; text-decoration: none;">
+                    Contact Us
+                </a>
+            </p>
+        </footer>
+    </div>
+
+    <script src="index.js"></script>
+</body>
+
+</html>
